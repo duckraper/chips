@@ -1,10 +1,11 @@
 import pygame as pg
-from mainmenu import MainMenu
+from data.gui.mainmenu import MainMenu
 from time import time
 from sys import exit
 from resources import FPS, game_icon, game_title
 from game import Game
 from traceback import print_exc
+from debug import debug
 
 pg.init()
 clock = pg.time.Clock()
@@ -21,21 +22,33 @@ if __name__ == "__main__":
         start_time = time()
 
         while main_menu.running:
-            main_menu.get_input()
+            main_menu.update()
             main_menu.draw_menu()
-            pg.display.flip()
-            clock.tick(FPS)
-            for event in pg.event.get():
-                if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_RETURN:
-                        if main_menu.selected_option == 0:
-                            game.running = True
-                            main_menu.running = False
+            if main_menu.execute:
+                # START
+                if main_menu.selected_option == 0:
+                    game.running = True
+                    main_menu.running = False
+                # OPTIONS
+                elif main_menu.selected_option == 1:
+                    pass
+                # EXIT
+                elif main_menu.selected_option == 2:
+                    main_menu.running = False
+                    break
 
-        while game.running:
-            game.run()
             pg.display.flip()
             clock.tick(FPS)
+
+        if game.running:
+            game.countdown()
+            pg.event.clear()
+
+            while game.running:
+                game.run()
+                pg.display.flip()
+                clock.tick(FPS)
+                debug(clock.get_fps())
 
         pg.quit()
         exit(0)
@@ -45,4 +58,3 @@ if __name__ == "__main__":
         print_exc()
         pg.quit()
         exit(1)
-        

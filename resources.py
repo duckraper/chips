@@ -5,6 +5,7 @@ import random
 from pathlib import Path
 from pygame.surface import Surface
 from pygame.math import Vector2
+from time import time
 
 pg.display.init()
 
@@ -60,6 +61,7 @@ spritesheet: dict[str, list[Surface]] = {
     "explosion": load_sprites("vfx/explosion", "explosion-0{i}.png"),
     "normal_shot": load_sprites("sprites/blasts/normal_shot", "normal_shot-0{i}.png"),
     "life_bar": load_sprites("gui/life_bar", "life_bar-{i}.png", size=(64*3,18*1.5), colorkey=(18, 22, 3)),
+    "mine": load_sprites("sprites/extras/mine", "mine-{i}.png", size=(SPRITE_SIZE[0]//3,SPRITE_SIZE[1]//3))
 }
 
 colors = {
@@ -80,7 +82,8 @@ movement: dict[str, Vector2] = {
 }
 
 game_title = "chips"
-game_icon = spritesheet["normal_shot"][0]
+game_icon: Surface = spritesheet["normal_shot"][0]
+
 
 def get_font(font="Pixeled.ttf", size = font_size) -> pg.font.Font:
     the_font = pg.font.Font(script_directory.joinpath("data", "fonts", font), size)
@@ -120,3 +123,22 @@ def generate_light_color() -> tuple[int, int, int]:
     blue_channel = min(255, blue_channel + variation)
 
     return red_channel, green_channel, blue_channel
+
+def announcement(self, message: list[str] | str, color=colors["white"], x: int=screen_width // 2, y: int=screen_height // 2) -> None:
+    for i in message:
+        text = self.font.render(str(i), True, color)
+        rect = text.get_rect(center=(x, y))
+
+        initial_time = time()
+        message_delay = 1
+        fading = 300
+        while time() - initial_time < message_delay:
+            
+            alpha = int(max(0, 255 - (time() - initial_time) * fading))
+            text.set_alpha(alpha)
+
+            # Dibujar en pantalla
+            pg.display.get_surface().fill(colors["black"])
+            pg.display.get_surface().blit(text, rect)
+            self.stars.draw()
+            pg.display.flip()
