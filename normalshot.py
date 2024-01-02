@@ -4,7 +4,7 @@ from pygame.surface import Surface
 from pygame.transform import rotate, scale
 
 class NormalShot(Blast):
-    def __init__(self, side, x, y, speed, rotation, damage=25, size=(6,15)):
+    def __init__(self, side, x, y, speed, rotation, damage=10, size=(6,15)):
         super().__init__(side, x, y, speed, rotation, damage, size)
 
         if side == "left":
