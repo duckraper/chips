@@ -7,5 +7,9 @@
 /lib/
 /lib64/
 *.cfg
-
 lib64
+/Include/
+/Lib/
+/Scripts/
+*__pycache__/
+
