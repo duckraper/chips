@@ -24,16 +24,16 @@ if __name__ == "__main__":
         while main_menu.running:
             main_menu.update()
             main_menu.draw_menu()
-            if main_menu.execute:
+            if main_menu.get() is not None:
                 # START
-                if main_menu.selected_option == 0:
+                if main_menu.get() == "PvP":
                     game.running = True
                     main_menu.running = False
                 # OPTIONS
-                elif main_menu.selected_option == 1:
+                elif main_menu.get() == "Options":
                     pass
                 # EXIT
-                elif main_menu.selected_option == 2:
+                elif main_menu.get() == "Quit":
                     main_menu.running = False
                     break
 

@@ -124,21 +124,21 @@ def generate_light_color() -> tuple[int, int, int]:
 
     return red_channel, green_channel, blue_channel
 
-def announcement(self, message: list[str] | str, color=colors["white"], x: int=screen_width // 2, y: int=screen_height // 2) -> None:
-    for i in message:
-        text = self.font.render(str(i), True, color)
-        rect = text.get_rect(center=(x, y))
+# def announcement(message: list[str] | str, color=colors["white"], x: int=screen_width // 2, y: int=screen_height // 2) -> None:
+#     for i in message:
+#         text = self.font.render(str(i), True, color)
+#         rect = text.get_rect(center=(x, y))
 
-        initial_time = time()
-        message_delay = 1
-        fading = 300
-        while time() - initial_time < message_delay:
+#         initial_time = time()
+#         message_delay = 1
+#         fading = 300
+#         while time() - initial_time < message_delay:
             
-            alpha = int(max(0, 255 - (time() - initial_time) * fading))
-            text.set_alpha(alpha)
+#             alpha = int(max(0, 255 - (time() - initial_time) * fading))
+#             text.set_alpha(alpha)
 
-            # Dibujar en pantalla
-            pg.display.get_surface().fill(colors["black"])
-            pg.display.get_surface().blit(text, rect)
-            self.stars.draw()
-            pg.display.flip()
+#             # Dibujar en pantalla
+#             pg.display.get_surface().fill(colors["black"])
+#             pg.display.get_surface().blit(text, rect)
+#             stars.draw()
+#             pg.display.flip()
